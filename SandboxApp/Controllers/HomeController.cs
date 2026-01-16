@@ -12,6 +12,58 @@ namespace SandboxApp.Controllers
         {            
         }
 
+        // GET - /home/displayphoto
+        public IActionResult DisplayPhoto()
+        {
+            // write code to create a Photo object and pass into the view
+
+            // Create a photo object
+            Photo photo = new Photo();
+
+            // Add values to the object's properties
+            photo.Id = 1;
+            photo.Title = "My cat Penny";
+            photo.Description = "Penny is a cuddly Calico cat. She loves to go outside an play.";
+            photo.ImageFilename = "cat.jpg";
+            photo.CreatedDate = DateTime.Now;
+
+            // Pass the photo object into the view
+            return View(photo);
+        }
+
+        // GET - /home/displayallphotos
+        public IActionResult DisplayAllPhotos()
+        {
+            // Create a list of photo objects List<Photo>
+            List<Photo> photos = new List<Photo>();
+
+            Photo photo1 = new Photo();
+            photo1.Id = 1;
+            photo1.Title = "My cat Penny";
+            photo1.Description = "Penny is a cuddly Calico cat. She loves to go outside an play.";
+            photo1.ImageFilename = "cat.jpg";
+            photo1.CreatedDate = DateTime.Now;
+
+            Photo photo2 = new Photo();
+            photo2.Id = 2;
+            photo2.Title = "My dog Audrey";
+            photo2.Description = "Audrey is a pug. She loves to eat and sleep.";
+            photo2.ImageFilename = "dog.jpg"; 
+            photo2.CreatedDate = DateTime.Now;
+
+            //... add a third
+
+            // Add photo objects to the list
+            photos.Add(photo1);
+            photos.Add(photo2);
+
+            // Pass photos list into the view
+            return View(photos); 
+        }
+
+
+
+
         public IActionResult Unauth()
         {
             bool isLoggedIn = true;

@@ -1,0 +1,17 @@
+﻿@model List<SandboxApp.Models.Photo>
+
+
+<h1>
+    All Photos
+</h1>
+
+<p>
+    Number of photos: @Model.Count
+</p>
+
+@foreach(var photo in Model)
+{
+    <p>
+        @photo.Id
+    </p>
+}
