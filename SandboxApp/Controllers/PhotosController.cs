@@ -20,21 +20,36 @@ namespace SandboxApp.Controllers
         }
 
         // GET: Photos
+        //public IActionResult Index()
+        //{
+        //    var photos = _context.Photo.ToList();
+
+        //    return View(photos);
+        //}
+
+        // GET: Photos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Photo.ToListAsync());
+            // Get a list of photos
+            var photos = await _context.Photo.ToListAsync();
+
+            // Pass photos into the database
+            return View(photos);
         }
 
         // GET: Photos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            // Validate the id is not null
             if (id == null)
             {
                 return NotFound();
             }
 
-            var photo = await _context.Photo
-                .FirstOrDefaultAsync(m => m.Id == id);
+            // Find the photo record where m.Id = id
+            var photo = await _context.Photo.FirstOrDefaultAsync(m => m.Id == id);
+
+            // Photo record does not exist
             if (photo == null)
             {
                 return NotFound();
@@ -54,14 +69,25 @@ namespace SandboxApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,ImageFilename,CreatedDate")] Photo photo)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,ImageFilename")] Photo photo)
         {
+            // Set the create date programmatically
+            photo.CreatedDate = DateTime.Now;
+
+            // Validate the photo object
             if (ModelState.IsValid)
             {
+                // Add new photo to the context
                 _context.Add(photo);
+
+                // Save the new photo object in database
                 await _context.SaveChangesAsync();
+
+                // Re-direct to the Index page
                 return RedirectToAction(nameof(Index));
             }
+
+            // Pass photo back to view
             return View(photo);
         }
 

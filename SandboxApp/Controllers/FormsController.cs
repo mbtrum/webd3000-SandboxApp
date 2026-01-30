@@ -27,20 +27,8 @@ namespace SandboxApp.Controllers
 
         // Example 2
 
-        [HttpPost]
-        public IActionResult ContactForm(Person person)
-        {
-            string message = $"Welcome to my web app {person.FirstName} {person.LastName}.";
-
-            ViewData["Message"] = message;
-
-            return View();
-        }
-
-        // Example 3
-        // [Bind] explicitly binds the inputs
         //[HttpPost]
-        //public IActionResult ContactForm([Bind("FirstName,LastName")] Person person)
+        //public IActionResult ContactForm(Person person)
         //{
         //    string message = $"Welcome to my web app {person.FirstName} {person.LastName}.";
 
@@ -48,5 +36,17 @@ namespace SandboxApp.Controllers
 
         //    return View();
         //}
+
+        // Example 3
+        // [Bind] explicitly binds the inputs
+        [HttpPost]
+        public IActionResult ContactForm([Bind("FirstName,LastName")] Person person)
+        {
+            string message = $"Welcome to my web app {person.FirstName} {person.LastName}.";
+
+            ViewData["Message"] = message;
+
+            return View();
+        }
     }
 }
